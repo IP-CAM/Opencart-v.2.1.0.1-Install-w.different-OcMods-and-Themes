@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+	<name>TM Product Category image</name>
+	<version>1.0</version>
+	<author>http://www.templatemonster.com</author>
+	<link>http://www.templatemonster.com</link>
+	<code>10</code>
+	<file path="catalog/controller/product/category.php">
+		<operation error="skip">
+			<search><![CDATA[  'name' => $result['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),]]></search>
+			<add position="after"><![CDATA['thumb' => $image,]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[  $data['categories'][] = array(]]></search>
+			<add position="before"><![CDATA[  $image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height'));   ]]></add>
+		</operation>
+		
+		
+	</file>
+</modification>

@@ -1,0 +1,27 @@
+<?php if (count($languages) > 1) { ?>
+<div class="box-language">
+	<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="language">
+		<ul>
+			<?php foreach ($languages as $language) { ?>
+			<?php if ($language['code'] == $code) { ?>
+			<li>
+				<a class="selected" href="<?php echo $language['code']; ?>">
+					<img class="hidden" src="image/flags/<?php echo $language['image']; ?>" alt="<?php echo $language['name']; ?>" title="<?php echo $language['name']; ?>" />
+					<?php echo $language['code']; ?>
+				</a>
+			</li>
+			<?php } else { ?>
+			<li>
+				<a href="<?php echo $language['code']; ?>">
+					<img class="hidden" src="image/flags/<?php echo $language['image']; ?>" alt="<?php echo $language['name']; ?>" title="<?php echo $language['name']; ?>" />
+					<?php echo $language['code']; ?>
+				</a>
+			</li>
+			<?php } ?>
+			<?php } ?>
+		</ul>
+		<input type="hidden" name="code" value="" />
+		<input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
+	</form>
+</div>
+<?php } ?>

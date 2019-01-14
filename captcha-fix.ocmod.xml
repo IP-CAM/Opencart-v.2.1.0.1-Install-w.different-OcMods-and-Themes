@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+	<name>Google captcha fix</name>
+	<version>1.0</version>
+	<author>http://www.templatemonster.com</author>
+	<link>http://www.templatemonster.com</link>
+	<code>captcha</code>
+	<file path="catalog/controller/captcha/google_captcha.php">
+		<operation>
+			<search><![CDATA[$this->document->addScript('https://www.google.com/recaptcha/api.js');]]></search>
+			<add position="replace"><![CDATA[// $this->document->addScript('https://www.google.com/recaptcha/api.js');]]></add>
+		</operation>
+	</file>
+</modification>

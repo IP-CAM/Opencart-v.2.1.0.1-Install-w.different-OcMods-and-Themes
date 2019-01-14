@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+	<name>TM Lazy load</name>
+	<version>1.0</version>
+	<author>http://www.templatemonster.com</author>
+	<link>http://www.templatemonster.com</link>
+	<code>TM Lazy load</code>
+	<file path="catalog/controller/module/featured.php|catalog/controller/module/bestseller.php|catalog/controller/module/latest.php|catalog/controller/module/special.php">
+		<operation>
+			<search><![CDATA[ 'thumb'       => $image, ]]></search>
+			<add position="after"><![CDATA[ 
+				'img-width'       => $setting['width'],
+				'img-height'       => $setting['height'],
+				]]></add>
+		</operation>
+	</file>
+
+	<file path="catalog/controller/product/*.php">
+		<operation>
+			<search><![CDATA[ 'thumb'       => $image, ]]></search>
+			<add position="after"><![CDATA[ 
+				'img-width'       => $this->config->get('config_image_product_width'),
+				'img-height'       => $this->config->get('config_image_product_height'),
+				]]></add>
+		</operation>
+	</file>
+</modification>

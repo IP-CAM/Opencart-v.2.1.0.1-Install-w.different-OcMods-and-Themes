@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+	<name>TM Header Cart</name>
+	<version>1.0</version>
+	<author>http://www.templatemonster.com</author>
+	<link>http://www.templatemonster.com</link>
+	<code>1</code>
+	<file path="catalog/controller/common/cart.php">
+		<operation>
+			<search><![CDATA[ $data['text_loading'] = $this->language->get('text_loading'); ]]></search>
+			<add position="after"><![CDATA[ 
+				$data['text_items2'] = sprintf($this->language->get('text_items2'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
+				$data['text_shopping_cart'] = $this->language->get('text_shopping_cart');
+				]]></add>
+		</operation>
+	</file>
+
+		<file path="catalog/controller/checkout/cart.php">
+		<operation>
+			<search><![CDATA[ $json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total)); ]]></search>
+			<add position="after"><![CDATA[ 
+				$json['total2'] = sprintf($this->language->get('text_items2'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
+				]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[ if ($product_info) { ]]></search>
+			<add position="before"><![CDATA[ 
+				$products = $this->cart->getProducts();
+				]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[ if ($product_info) { ]]></search>
+			<add position="after"><![CDATA[ 
+				$current_quantity = 0;
+            foreach ($products as $product) {
+                if ($product_info['product_id'] == $product['product_id']) {
+                    $current_quantity = $product['quantity'];
+                }
+            }
+				]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[ if (isset($this->request->post['quantity']) && ((int)$this->request->post['quantity'] >= $product_info['minimum'])) { ]]></search>
+			<add position="after"><![CDATA[ 
+				if (($product_info['quantity'] >= (int)$this->request->post['quantity']) && ($product_info['quantity'] >= $current_quantity + (int)$this->request->post['quantity'])) {
+				]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[ $quantity = (int)$this->request->post['quantity']; ]]></search>
+			<add position="after"><![CDATA[ 
+				} else {
+                    $json['error']['quantity'] = sprintf($this->language->get('error_quantity'), $product_info['quantity']);
+                }
+				]]></add>
+		</operation>
+	</file>
+	<file path="catalog/language/english/checkout/cart.php">
+		<operation>
+			<search><![CDATA[ $_['error_recurring_required'] = 'Please select a payment recurring!'; ]]></search>
+			<add position="before"><![CDATA[ 
+			$_['error_quantity']    = 'Error! Only %s items available!';
+				]]></add>
+		</operation>
+	</file>
+		<file path="catalog/language/de-DE/checkout/cart.php">
+		<operation>
+			<search><![CDATA[ $_['error_recurring_required'] = 'Please select a payment recurring!'; ]]></search>
+			<add position="before"><![CDATA[ 
+			$_['error_quantity']    = 'Error! Nur %s Stück verfügbar!';
+				]]></add>
+		</operation>
+	</file>
+		<file path="catalog/language/russian/checkout/cart.php">
+		<operation>
+			<search><![CDATA[ $_['error_recurring_required'] = 'Please select a payment recurring!'; ]]></search>
+			<add position="before"><![CDATA[ 
+			$_['error_quantity']    = 'Ошибка! Доступно %s единиц!';
+				]]></add>
+		</operation>
+	</file>
+
+	<file path="catalog/language/english/common/cart.php|catalog/language/english/checkout/cart.php">
+		<operation>
+			<search><![CDATA[ $_['text_items'] ]]></search>
+			<add position="before"><![CDATA[ 
+			$_['text_items2']    = '%s';
+			$_['text_shopping_cart']    = 'Shopping Cart:';
+				]]></add>
+		</operation>
+	</file>
+	<file path="catalog/language/de-DE/common/cart.php|catalog/language/de-DE/checkout/cart.php">
+		<operation>
+			<search><![CDATA[ $_['text_recurring'] ]]></search>
+			<add position="before"><![CDATA[ 
+			$_['text_shopping_cart']= 'Warenkorb: ';
+				]]></add>
+		</operation>
+	</file>
+	<file path="catalog/language/russian/common/cart.php|catalog/language/russian/checkout/cart.php">
+		<operation>
+			<search><![CDATA[ $_['text_recurring'] ]]></search>
+			<add position="before"><![CDATA[ 
+			$_['text_shopping_cart'] = 'Корзина: ';
+				]]></add>
+		</operation>
+	</file>
+</modification>

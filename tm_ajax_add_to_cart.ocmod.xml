@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+	<name>TM Ajax add to cart </name>
+	<version>1.0</version>
+	<author>http://www.templatemonster.com</author>
+	<link>http://www.templatemonster.com</link>
+	<code>ajax_add</code>
+
+ <!-- Featured -->
+	<file path="catalog/controller/module/featured.php">
+		<operation>
+			<search><![CDATA[ 
+				$data['button_cart'] = $this->language->get('button_cart');
+				]]></search>
+			<add position="after"><![CDATA[ 
+				$data['text_option'] = $this->language->get('text_option');
+				$data['text_select'] = $this->language->get('text_select');
+				$data['button_upload'] = $this->language->get('button_upload');
+				$data['text_loading'] = $this->language->get('text_loading');
+				]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+				$data['products'][] = array(
+				]]></search>
+            <add position="before"><![CDATA[
+					   $options = array();
+                    foreach ($this->model_catalog_product->getProductOptions($product_id) as $option) {
+                        $product_option_value_data = array();
+                        foreach ($option['product_option_value'] as $option_value) {
+                            if (!$option_value['subtract'] || ($option_value['quantity'] > 0)) {
+                                if ((($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) && (float)$option_value['price']) {
+                                    $price_option = $this->currency->format($this->tax->calculate($option_value['price'], $product_info['tax_class_id'], $this->config->get('config_tax') ? 'P' : false));
+                                } else {
+                                    $price_option = false;
+                                }
+                                $product_option_value_data[] = array(
+                                    'product_option_value_id' => $option_value['product_option_value_id'],
+                                    'option_value_id'         => $option_value['option_value_id'],
+                                    'name'                    => $option_value['name'],
+                                    'image'                   => $this->model_tool_image->resize($option_value['image'], 50, 50),
+                                    'price'                   => $price_option,
+                                    'price_prefix'            => $option_value['price_prefix']
+                                );
+                            }
+                        }
+                        $options[] = array(
+                            'product_option_id'    => $option['product_option_id'],
+                            'product_option_value' => $product_option_value_data,
+                            'option_id'            => $option['option_id'],
+                            'name'                 => $option['name'],
+                            'type'                 => $option['type'],
+                            'value'                => $option['value'],
+                            'required'             => $option['required']
+                        );
+                    }
+				]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+				 'href'        => $this->url->link('product/product', 'product_id=' . $product_info['product_id'])
+				]]></search>
+            <add position="after"><![CDATA[,
+					  'options'     => $options
+				]]></add>
+		</operation>
+	</file>
+ <!-- Specials -->
+	<file path="catalog/controller/module/special.php|catalog/controller/module/bestseller.php|catalog/controller/module/latest.php|catalog/controller/product/*.php">
+		<operation>
+			<search><![CDATA[ 
+				$data['button_cart'] = $this->language->get('button_cart');
+				]]></search>
+			<add position="after"><![CDATA[ 
+				$data['text_option'] = $this->language->get('text_option');
+				$data['text_select'] = $this->language->get('text_select');
+				$data['button_upload'] = $this->language->get('button_upload');
+				$data['text_loading'] = $this->language->get('text_loading');
+				]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+				$data['products'][] = array(
+				]]></search>
+            <add position="before"><![CDATA[
+					   $options = array();
+                    foreach ($this->model_catalog_product->getProductOptions($result['product_id']) as $option) {
+                        $product_option_value_data = array();
+                        foreach ($option['product_option_value'] as $option_value) {
+                            if (!$option_value['subtract'] || ($option_value['quantity'] > 0)) {
+                                if ((($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) && (float)$option_value['price']) {
+                                    $price_option = $this->currency->format($this->tax->calculate($option_value['price'], $result['tax_class_id'], $this->config->get('config_tax') ? 'P' : false));
+                                } else {
+                                    $price_option = false;
+                                }
+                                $product_option_value_data[] = array(
+                                    'product_option_value_id' => $option_value['product_option_value_id'],
+                                    'option_value_id'         => $option_value['option_value_id'],
+                                    'name'                    => $option_value['name'],
+                                    'image'                   => $this->model_tool_image->resize($option_value['image'], 50, 50),
+                                    'price'                   => $price_option,
+                                    'price_prefix'            => $option_value['price_prefix']
+                                );
+                            }
+                        }
+                        $options[] = array(
+                            'product_option_id'    => $option['product_option_id'],
+                            'product_option_value' => $product_option_value_data,
+                            'option_id'            => $option['option_id'],
+                            'name'                 => $option['name'],
+                            'type'                 => $option['type'],
+                            'value'                => $option['value'],
+                            'required'             => $option['required']
+                        );
+                    }
+				]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+				 'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
+				]]></search>
+            <add position="after"><![CDATA[,
+					  'options'     => $options
+				]]></add>
+		</operation>
+
+		<operation>
+			<search><![CDATA[
+				'href'        => $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'] . $url)
+				]]></search>
+            <add position="after"><![CDATA[,
+					  'options'     => $options
+				]]></add>
+		</operation>
+	</file>
+
+		<file path="catalog/controller/product/search.php|catalog/controller/product/special.php">
+		<operation>
+			<search><![CDATA[ 'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'] . $url) ]]></search>
+			<add position="after"><![CDATA[,
+					  'options'     => $options
+				]]></add>
+		</operation>
+		
+	</file>
+			<file path="catalog/controller/product/manufacturer.php">
+		<operation>
+			<search><![CDATA['href'        => $this->url->link('product/product', 'manufacturer_id=' . $result['manufacturer_id'] . '&product_id=' . $result['product_id'] . $url) ]]></search>
+			<add position="after"><![CDATA[,
+					  'options'     => $options
+				]]></add>
+		</operation>
+		
+	</file>
+
+
+
+		<file path="catalog/language/english/module/featured.php|catalog/language/english/module/special.php|catalog/language/english/module/bestseller.php|catalog/language/english/module/latest.php|catalog/language/english/product/*.php">
+		<operation>
+			<search><![CDATA[ $_['text_tax'] ]]></search>
+			<add position="before"><![CDATA[
+				$_['text_option']              = 'Available Options';
+				$_['text_select']              = '--- Please Select ---';
+				]]></add>
+		</operation>
+		
+	</file>
+	<file path="catalog/language/de-DE/module/featured.php|catalog/language/de-DE/module/special.php|catalog/language/de-DE/module/bestseller.php|catalog/language/de-DE/module/latest.php|catalog/language/de-DE/product/*.php">
+		<operation>
+			<search><![CDATA[ $_['text_tax'] ]]></search>
+			<add position="after"><![CDATA[		
+				$_['text_option']              = 'Mögliche Optionen';
+				$_['text_select']              = '--- Bitte wählen ---';
+				]]></add>
+		</operation>
+		
+	</file>
+	<file path="catalog/language/russian/module/featured.php|catalog/language/russian/module/special.php|catalog/language/russian/module/bestseller.php|catalog/language/russian/module/latest.php|catalog/language/russian/product/*.php">
+		<operation>
+			<search><![CDATA[ $_['text_tax']]]></search>
+			<add position="before"><![CDATA[		
+				$_['text_option']              = 'Доступные варианты';
+				$_['text_select']              = '--- Выберите ---';
+				]]></add>
+		</operation>
+		
+	</file>
+</modification>

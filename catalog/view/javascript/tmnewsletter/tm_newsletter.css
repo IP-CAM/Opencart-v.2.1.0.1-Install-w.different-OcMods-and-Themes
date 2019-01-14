@@ -1,0 +1,86 @@
+.box.newsletter * + .dropdown-btn {
+  margin-top: 17px;
+}
+
+.box.newsletter {
+  background: #f8eb0d;
+  padding: 35px 39px 45px 39px;
+  margin: 0;
+}
+.box.newsletter, .box.newsletter .box-heading h3 {
+  color: #333;
+}
+.box.newsletter .form-control,
+.box.newsletter .dropdown-btn {
+  height: 50px;
+  width: 100%;
+}
+.box.newsletter .newsletter-description {
+  font-size: 14px;
+  line-height: 19px;
+  margin: 0;
+}
+.box.newsletter .form-control {
+  height: 50px;
+  border: none;
+  font-size: 16px;
+  line-height: 18px;
+  background: #fff;
+}
+.box.newsletter .form-control, .box.newsletter .form-control:focus {
+  outline: none;
+  box-shadow: none;
+}
+.box.newsletter .form-control::-webkit-input-placeholder {
+  color: #333;
+  opacity: 1;
+}
+.box.newsletter .form-control:-moz-placeholder {
+  color: #333;
+  opacity: 1;
+}
+.box.newsletter .form-control::-moz-placeholder {
+  color: #333;
+  opacity: 1;
+}
+.box.newsletter .form-control:-ms-input-placeholder {
+  color: #333;
+  opacity: 1;
+}
+.box.newsletter .tm-login-form {
+  position: relative;
+}
+.box.newsletter .box-heading {
+  margin-bottom: 13px;
+}
+.box.newsletter .box-heading h3 {
+  font-size: 30px;
+  line-height: 30px;
+}
+.box.newsletter .dropdown-btn {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #fff;
+  background: #333;
+  border: 3px solid #333;
+}
+.box.newsletter .dropdown-btn:hover {
+  color: #333;
+  background: #fff;
+  border-color: #333;
+}
+
+.newsletter-error, .newsletter-success {
+  display: block;
+  text-align: center;
+  margin-top: 3px;
+}
+
+.newsletter-error {
+  color: #D4323D;
+}
+
+.newsletter-success {
+  color: #55C65E;
+}

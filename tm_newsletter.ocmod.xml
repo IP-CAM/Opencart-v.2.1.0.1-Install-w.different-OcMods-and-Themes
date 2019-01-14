@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+	<name>TM NewsLetter</name>
+	<version>1.0</version>
+	<author>http://www.templatemonster.com</author>
+	<link>http://www.templatemonster.com</link>
+	<code>TM Newsletter</code>
+	<file path="admin/controller/marketing/contact.php">
+		<operation>
+			<search><![CDATA[
+			$this->load->model('sale/order');
+			]]></search>
+			<add position="after"><![CDATA[
+			$this->load->model('module/tm_newsletter');
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			$results = $this->model_sale_customer->getCustomers($customer_data);
+			]]></search>
+			<add position="after"><![CDATA[
+			$guest_results = $this->model_module_tm_newsletter->getNewsletters();
+			foreach ($guest_results as $result) {
+				$emails[] = $result['tm_newsletter_email'];
+			}
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/account/register.php">
+		<operation>
+			<search><![CDATA[
+			$this->load->model('account/customer');
+			]]></search>
+			<add position="after"><![CDATA[
+			$this->load->model('module/tm_newsletter');
+			]]></add>
+		</operation>
+		<operation>
+			<search><![CDATA[
+			$this->customer->login($this->request->post['email'], $this->request->post['password']);
+			]]></search>
+			<add position="after"><![CDATA[
+			$this->model_module_tm_newsletter->deleteNewsletter($this->request->post['email']);
+			]]></add>
+		</operation>
+	</file>	
+</modification>

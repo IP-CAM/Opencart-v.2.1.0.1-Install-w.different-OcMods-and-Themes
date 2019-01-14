@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+	<name>TM label sale</name>
+	<version>1.0</version>
+	<author>http://www.templatemonster.com</author>
+	<link>http://www.templatemonster.com</link>
+	<code>13</code>
+	<file path="catalog/controller/module/featured.php|catalog/controller/module/special.php|catalog/controller/module/latest.php|catalog/controller/product/product.php|catalog/controller/module/bestestseller.php">
+		<operation>
+			<search><![CDATA[
+			$data['button_compare'] = $this->language->get('button_compare');
+			]]></search>
+			<add position="after"><![CDATA[
+			$data['text_sale'] = $this->language->get('text_sale');
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/language/english/module/featured.php|catalog/language/english/module/special.php|catalog/language/english/module/latest.php|catalog/language/english/product/product.php|catalog/language/english/module/bestestseller.php">
+		<operation>
+			<search><![CDATA[
+			$_['text_tax']
+			]]></search>
+			<add position="after"><![CDATA[
+			$_['text_sale']      = 'Sale';
+			]]></add>
+		</operation>
+	</file>
+
+	<file path="catalog/language/de-DE/module/featured.php|catalog/language/de-DE/module/special.php|catalog/language/de-DE/module/latest.php|catalog/language/de-DE/product/product.php|catalog/language/de-DE/module/bestestseller.php">
+		<operation>
+			<search><![CDATA[
+			$_['text_tax']
+			]]></search>
+			<add position="before"><![CDATA[
+			$_['text_sale']      = 'Verkauf';
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/language/russian/module/featured.php|catalog/language/russian/module/special.php|catalog/language/russian/module/latest.php|catalog/language/russian/product/product.php|catalog/language/russian/module/bestestseller.php">
+		<operation>
+			<search><![CDATA[
+			$_['text_tax']
+			]]></search>
+			<add position="before"><![CDATA[
+			$_['text_sale']      = 'Скидка';
+			]]></add>
+		</operation>
+	</file>
+</modification>

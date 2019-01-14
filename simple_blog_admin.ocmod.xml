@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Based on Simple Blog Module -->
+<modification>
+   <name>Blog Admin</name>
+   <code>blog_admin</code>
+   <version>2</version>
+   <author>http://www.templatemonster.com</author>
+
+   <file path="admin/controller/common/menu.php">
+       <operation>
+           <search><![CDATA[$data['text_openbay_order_import']]]></search>
+           <add position="after"><![CDATA[
+               $data['text_simple_blogs'] = $this->language->get('text_simple_blogs');
+               $data['text_simple_blog_author'] = $this->language->get('text_simple_blog_author');
+               $data['text_simple_blog_category'] = $this->language->get('text_simple_blog_category');
+               $data['text_simple_blog_article'] = $this->language->get('text_simple_blog_article');
+               $data['text_simple_blog_article_comment'] = $this->language->get('text_simple_blog_article_comment');
+               $data['text_simple_blog_view_report'] = $this->language->get('text_simple_blog_view_report');
+           ]]></add>
+       </operation>
+
+       <operation>
+           <search><![CDATA[$data['openbay_link_amazonus_links']]]></search>
+           <add position="after"><![CDATA[
+               $data['simple_blog_author'] = $this->url->link('simple_blog/author', 'token=' . $this->session->data['token'], 'SSL');
+               $data['simple_blog_category'] = $this->url->link('simple_blog/category', 'token=' . $this->session->data['token'], 'SSL');
+               $data['simple_blog_article'] = $this->url->link('simple_blog/article', 'token=' . $this->session->data['token'], 'SSL');
+               $data['simple_blog_comment'] = $this->url->link('simple_blog/comment', 'token=' . $this->session->data['token'], 'SSL');
+               $data['simple_blog_view_report'] = $this->url->link('simple_blog/report', 'token=' . $this->session->data['token'], 'SSL');
+           ]]></add>
+       </operation>
+
+   </file>
+
+   <file path="admin/language/*/common/menu.php">
+       <operation>
+           <search><![CDATA[$_['text_paypal_manage']]]></search>
+           <add position="after"><![CDATA[
+               $_['text_simple_blogs']	= 'Blog';
+               $_['text_simple_blog_author']	= 'Author';
+               $_['text_simple_blog_category']	= 'Category';
+               $_['text_simple_blog_article']	= 'Article';
+               $_['text_simple_blog_article_comment']	= 'Article Comment';
+               $_['text_simple_blog_view_report'] = 'Report';
+           ]]></add>
+       </operation>
+   </file>
+
+   <file path="admin/view/template/common/menu.tpl">
+       <operation>
+           <search><![CDATA[<li id="reports">]]></search>
+           <add position="before"><![CDATA[
+               <li id="simple-blog"><a class="parent"><i class="fa fa-file-text-o fa-fw"></i> <span><?php echo $text_simple_blogs; ?></span></a>
+                   <ul>
+                       <li><a href="<?php echo $simple_blog_article; ?>"><?php echo $text_simple_blog_article; ?></a></li>
+                       <li><a href="<?php echo $simple_blog_category; ?>"><?php echo $text_simple_blog_category; ?></a></li>
+                         <li><a href="<?php echo $simple_blog_author; ?>"><?php echo $text_simple_blog_author; ?></a></li>
+                         <li><a href="<?php echo $simple_blog_comment; ?>"><?php echo $text_simple_blog_article_comment; ?></a></li>
+                         <li><a href="<?php echo $simple_blog_view_report; ?>"><?php echo $text_simple_blog_view_report; ?></a></li>
+                   </ul>
+               </li>
+           ]]></add>
+       </operation>
+   </file>
+
+   <file path="admin/view/template/setting/setting.tpl">
+       <operation>
+           <search><![CDATA[<li><a href="#tab-server" data-toggle="tab"><?php echo $tab_server; ?></a></li>]]></search>
+           <add position="after"><![CDATA[
+               <li><a href="#tab-blog" data-toggle="tab"><?php echo $tab_blog; ?></a></li>
+           ]]></add>
+       </operation>
+
+       <operation>
+           <search><![CDATA[</form>]]></search>
+           <add position="before" offset="1"><![CDATA[
+               <div class="tab-pane" id="tab-blog">
+                               <fieldset>
+                                   <div class="form-group">
+                                       <label
+                                           class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label"><?php echo $entry_status; ?></label>
+
+                                       <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                           <select name="config_simple_blog_status" class="form-control">
+                                               <?php if ($config_simple_blog_status == 1) { ?>
+                                                   <option value="1"
+                                                           selected='selected'><?php echo $text_enabled; ?></option>
+                                                   <option value="0"><?php echo $text_disabled; ?></option>
+                                               <?php } else { ?>
+                                                   <option value="1"><?php echo $text_enabled; ?></option>
+                                                   <option value="0"
+                                                           selected="selected"><?php echo $text_disabled; ?></option>
+                                               <?php } ?>
+                                           </select>
+                                       </div>
+                                   </div>
+
+                                   <div class="form-group">
+                                       <label class="col-sm-2 control-label">
+                                       <span
+                                               data-toggle="tooltip"
+                                               title="<?php echo $help_limit; ?>"><?php echo $entry_limit; ?></span></label>
+                                       <div class="col-sm-10">
+                                           <input type="text" name="config_simple_blog_limit" value="<?php echo (isset($config_simple_blog_limit) ? $config_simple_blog_limit : '5')  ; ?>" placeholder="<?php echo $entry_limit; ?>" class="form-control" />
+                                       </div>
+                                   </div>
+
+                                   <div class="form-group">
+                                       <label class="col-sm-2 control-label">
+                                      <?php echo $entry_description_limit; ?></label>
+                                       <div class="col-sm-10">
+                                           <input type="text" name="config_simple_blog_description_limit" value="<?php echo (isset($config_simple_blog_description_limit) ? $config_simple_blog_description_limit : '5')  ; ?>" placeholder="<?php echo $entry_description_limit; ?>" class="form-control" />
+                                       </div>
+                                   </div>
+
+
+
+                                   <div class="form-group">
+                                       <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label"><span
+                                               data-toggle="tooltip"
+                                               title="<?php echo $help_comment_approval; ?>"><?php echo $entry_comment_approval; ?></span>
+                                       </label>
+
+                                       <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                           <div class="checkbox-inline">
+                                               <?php if (isset($config_simple_blog_comment_auto_approval)) { ?>
+                                                   <input type="radio" name="config_simple_blog_comment_auto_approval"
+                                                          value="1" checked="checked"/> <?php echo $text_yes; ?>&nbsp;
+                                                   <input type="radio" name="config_simple_blog_comment_auto_approval"
+                                                          value="0"/> <?php echo $text_no; ?>
+                                               <?php } else { ?>
+                                                   <input type="radio" name="config_simple_blog_comment_auto_approval"
+                                                          value="1"/> <?php echo $text_yes; ?>&nbsp;
+                                                   <input type="radio" name="config_simple_blog_comment_auto_approval"
+                                                          value="0" checked="checked"/> <?php echo $text_no; ?>
+                                               <?php } ?>
+                                           </div>
+                                       </div>
+                                   </div>
+
+                                   <div class="form-group">
+                                       <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label"><span
+                                               data-toggle="tooltip"
+                                               title="<?php echo $help_author_information; ?>"><?php echo $entry_author_information; ?></span>
+                                       </label>
+
+                                       <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                           <div class="checkbox-inline">
+                                               <?php if (isset($config_simple_blog_author_information)) { ?>
+                                                   <input type="radio" name="config_simple_blog_author_information" value="1"
+                                                          checked="checked"/> <?php echo $text_enabled; ?>&nbsp;
+                                                   <input type="radio" name="config_simple_blog_author_information"
+                                                          value="0"/> <?php echo $text_disabled; ?>
+                                               <?php } else { ?>
+                                                   <input type="radio" name="config_simple_blog_author_information"
+                                                          value="1"/> <?php echo $text_enabled; ?>&nbsp;
+                                                   <input type="radio" name="config_simple_blog_author_information" value="0"
+                                                          checked="checked"/> <?php echo $text_disabled; ?>
+                                               <?php } ?>
+                                           </div>
+                                       </div>
+                                   </div>
+
+                                   <div class="form-group">
+                                       <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label"><span
+                                               data-toggle="tooltip"
+                                               title="<?php echo $help_related_article; ?>"><?php echo $entry_related_article; ?></span>
+                                       </label>
+
+                                       <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                           <div class="checkbox-inline">
+                                               <?php if (isset($config_simple_blog_related_articles)) { ?>
+                                                   <input type="radio" name="config_simple_blog_related_articles" value="1"
+                                                          checked="checked"/> <?php echo $text_enabled; ?>&nbsp;
+                                                   <input type="radio" name="config_simple_blog_related_articles"
+                                                          value="0"/> <?php echo $text_disabled; ?>
+                                               <?php } else { ?>
+                                                   <input type="radio" name="config_simple_blog_related_articles"
+                                                          value="1"/> <?php echo $text_enabled; ?>&nbsp;
+                                                   <input type="radio" name="config_simple_blog_related_articles" value="0"
+                                                          checked="checked"/> <?php echo $text_disabled; ?>
+                                               <?php } ?>
+                                           </div>
+                                       </div>
+                                   </div>
+
+                                   <div class="form-group">
+                                       <label class="col-lg-2 col-md-2 col-sm-2 col-xs-12 control-label"><span
+                                               data-toggle="tooltip"
+                                               title="<?php echo $help_show_social_site_option; ?>"><?php echo $entry_show_social_site_option; ?></span>
+                                       </label>
+
+                                       <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                           <div class="checkbox-inline">
+                                               <?php if (isset($config_simple_blog_share_social_site)) { ?>
+                                                   <input type="radio" name="config_simple_blog_share_social_site" value="1"
+                                                          checked="checked"/> <?php echo $text_enabled; ?>&nbsp;
+                                                   <input type="radio" name="config_simple_blog_share_social_site"
+                                                          value="0"/> <?php echo $text_disabled; ?>
+                                               <?php } else { ?>
+                                                   <input type="radio" name="config_simple_blog_share_social_site"
+                                                          value="1"/> <?php echo $text_enabled; ?>&nbsp;
+                                                   <input type="radio" name="config_simple_blog_share_social_site" value="0"
+                                                          checked="checked"/> <?php echo $text_disabled; ?>
+                                               <?php } ?>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </fieldset>
+                           </div>
+               ]]>
+
+
+           </add>
+       </operation>
+   </file>
+
+   <file path="admin/controller/setting/setting.php">
+       <operation>
+           <search><![CDATA[$data['entry_status'] = $this->language->get('entry_status');]]></search>
+           <add position="after"><![CDATA[
+               $data['entry_comment_approval'] = $this->language->get('entry_comment_approval');
+               $data['entry_author_information'] = $this->language->get('entry_author_information');
+               $data['entry_show_social_site_option'] = $this->language->get('entry_show_social_site_option');
+               $data['entry_related_article'] = $this->language->get('entry_related_article');
+     $data['entry_limit'] = $this->language->get('entry_limit');
+     $data['entry_description_limit'] = $this->language->get('entry_description_limit');
+
+           ]]></add>
+       </operation>
+
+       <operation>
+           <search><![CDATA[$data['text_error'] = $this->language->get('text_error');]]></search>
+           <add position="after"><![CDATA[
+               $data['text_simple_blog'] = $this->language->get('text_simple_blog');
+               $data['text_blog_category'] = $this->language->get('text_blog_category');
+               $data['tab_blog'] = $this->language->get('tab_blog');
+           ]]></add>
+       </operation>
+
+       <operation>
+           <search><![CDATA[$data['help_compression'] = $this->language->get('help_compression');]]></search>
+           <add position="after"><![CDATA[
+
+           $data['help_comment_approval'] = $this->language->get('help_comment_approval');
+           $data['help_author_information'] = $this->language->get('help_author_information');
+           $data['help_related_article'] = $this->language->get('help_related_article');
+           $data['help_show_social_site_option'] = $this->language->get('help_show_social_site_option');
+           $data['help_show_author'] = $this->language->get('help_show_author');
+     $data['help_limit'] = $this->language->get('help_limit');
+           ]]></add>
+       </operation>
+
+       <operation>
+           <search><![CDATA[$data['header'] = $this->load->controller('common/header');]]></search>
+           <add position="before"><![CDATA[
+  if (isset($this->request->post['config_simple_blog_status'])) {
+       $data['config_simple_blog_status'] = $this->request->post['config_simple_blog_status'];
+     } else if ($this->config->get('config_simple_blog_status')) {
+       $data['config_simple_blog_status'] = $this->config->get('config_simple_blog_status');
+     }
+
+     if (isset($this->request->post['config_simple_blog_comment_auto_approval'])) {
+       $data['config_simple_blog_comment_auto_approval'] = $this->request->post['config_simple_blog_comment_auto_approval'];
+     } else if ($this->config->get('config_simple_blog_comment_auto_approval')) {
+       $data['config_simple_blog_comment_auto_approval'] = $this->config->get('config_simple_blog_comment_auto_approval');
+     }
+
+     if (isset($this->request->post['config_simple_blog_author_information'])) {
+       $data['config_simple_blog_author_information'] = $this->request->post['config_simple_blog_author_information'];
+     } else if ($this->config->get('config_simple_blog_author_information')) {
+       $data['config_simple_blog_author_information'] = $this->config->get('config_simple_blog_author_information');
+     }
+
+     if (isset($this->request->post['config_simple_blog_share_social_site'])) {
+       $data['config_simple_blog_share_social_site'] = $this->request->post['config_simple_blog_share_social_site'];
+     } else if ($this->config->get('config_simple_blog_share_social_site')) {
+       $data['config_simple_blog_share_social_site'] = $this->config->get('config_simple_blog_share_social_site');
+     }
+
+     if (isset($this->request->post['config_simple_blog_related_articles'])) {
+       $data['config_simple_blog_related_articles'] = $this->request->post['config_simple_blog_related_articles'];
+     } else if ($this->config->get('config_simple_blog_related_articles')) {
+       $data['config_simple_blog_related_articles'] = $this->config->get('config_simple_blog_related_articles');
+     }
+
+     if (isset($this->request->post['config_simple_blog_limit'])) {
+       $data['config_simple_blog_limit'] = $this->request->post['config_simple_blog_limit'];
+     } elseif ($this->config->get('config_simple_blog_limit')) {
+       $data['config_simple_blog_limit'] = $this->config->get('config_simple_blog_limit');
+     }
+     if (isset($this->request->post['config_simple_blog_description_limit'])) {
+       $data['config_simple_blog_description_limit'] = $this->request->post['config_simple_blog_description_limit'];
+     } elseif ($this->config->get('config_simple_blog_description_limit')) {
+       $data['config_simple_blog_description_limit'] = $this->config->get('config_simple_blog_description_limit');
+     }
+
+           ]]></add>
+       </operation>
+   </file>
+
+   <file path="admin/language/english/setting/setting.php">
+       <operation>
+           <search><![CDATA[$_['text_error']                       = 'Error Handling';]]></search>
+           <add position="after"><![CDATA[
+               $_['text_simple_blog']              = 'Blog';
+               $_['tab_blog']              = 'Blog';
+           ]]></add>
+       </operation>
+       <operation>
+           <search><![CDATA[$_['entry_status']                     = 'Status';]]></search>
+           <add position="after"><![CDATA[
+               $_['entry_related_article']    	= 'Related Article:';
+               $_['entry_comment_approval']	= 'Comment Auto approval:';
+               $_['entry_author_information']	= 'Author Information:';
+               $_['entry_show_social_site_option'] = 'Share with social site:';
+               $_['entry_show_author'] 		= 'Show Authors:';
+       $_['entry_limit']    = 'Limit';
+       $_['entry_description_limit']    = 'Description Symbol Limit';
+               $_['help_comment_approval']         = 'On Yes, Comment on the blog is auto approval.';
+               $_['help_author_information']       = 'On Enabled, information related to author will display.';
+               $_['help_related_article']          = 'On Enabled, Related article will display.';
+               $_['help_show_social_site_option']  = 'On Enabled, Article share with social networking site.';
+$_['help_limit']       = 'How many posts display per page (number)';
+
+           ]]></add>
+       </operation>
+
+   </file>
+
+
+</modification>

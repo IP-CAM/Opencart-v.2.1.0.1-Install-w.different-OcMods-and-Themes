@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+	<name>Tm PathTheme</name>
+	<version>1.0</version>
+	<author>http://www.templatemonster.com</author>
+	<link>http://www.templatemonster.com</link>
+	<code>14</code>
+	<file path="catalog/controller/common/header.php">
+		<operation>
+			<search><![CDATA[
+			$data['name'] = $this->config->get('config_name');
+			]]></search>
+			<add position="after"><![CDATA[
+			$data['theme_path'] = $this->config->get('config_template');
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/common/footer.php">
+		<operation>
+			<search><![CDATA[
+			$this->load->language('common/footer');
+			]]></search>
+			<add position="after"><![CDATA[
+			$data['theme_path'] = $this->config->get('config_template');
+			]]></add>
+		</operation>
+	</file>
+	<file path="catalog/controller/account/recurring.php">
+		<operation>
+			<search><![CDATA[
+			$data['button_continue'] = $this->language->get('button_continue');
+			]]></search>
+			<add position="after"><![CDATA[
+			$data['theme_path'] = $this->config->get('config_template');
+			]]></add>
+		</operation>
+	</file>
+</modification>

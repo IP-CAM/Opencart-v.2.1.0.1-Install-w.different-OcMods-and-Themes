@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+	<name>TM Footer</name>
+	<version>1.0</version>
+	<author>http://www.templatemonster.com</author>
+	<link>http://www.templatemonster.com</link>
+	<code>4</code>
+	<file path="catalog/controller/common/footer.php">
+		<operation error="skip">
+			<search><![CDATA[ $data['text_newsletter'] = $this->language->get('text_newsletter'); ]]></search>
+			<add position="after"><![CDATA[ 
+				$data['text_account'] = $this->language->get('text_account');
+				$data['text_follow'] = $this->language->get('text_follow');
+				$data['text_support'] = $this->language->get('text_support');
+				$data['text_twi'] = $this->language->get('text_twi');
+				$data['text_fb'] = $this->language->get('text_fb');
+				$data['text_rss'] = $this->language->get('text_rss');
+				$data['text_yt'] = $this->language->get('text_yt');
+				]]>
+			</add>
+		</operation>
+		<operation error="skip">
+			<search><![CDATA[ $data['newsletter'] = $this->url->link('account/newsletter', '', 'SSL'); ]]></search>
+			<add position="after"><![CDATA[
+				$data['home'] = $this->url->link('common/home');
+				$data['address'] = nl2br($this->config->get('config_address'));
+				$data['telephone'] = $this->config->get('config_telephone');
+				$data['fax'] = $this->config->get('config_fax');
+				$data['name'] = $this->config->get('config_name');
+				$data['open'] = $this->config->get('config_open');
+				]]>
+			</add>
+		</operation>
+
+		<operation>
+			<search><![CDATA[ $data['newsletter'] = $this->url->link('account/newsletter', '', 'SSL'); ]]></search>
+			<add position="after"><![CDATA[ 
+				$data['tm_social_list'] = $this->load->controller('module/tm_social_list');
+				
+				if ($this->request->server['HTTPS']) {
+				$server = $this->config->get('config_ssl');
+				} else {
+				$server = $this->config->get('config_url');
+				}
+
+				if (is_file(DIR_IMAGE . $this->config->get('config_logo'))) {
+				$data['logo'] = $server . 'image/' . $this->config->get('config_logo');
+				} else {
+				$data['logo'] = '';
+				}
+				]]>
+			</add>
+		</operation>
+	</file>
+</modification>
